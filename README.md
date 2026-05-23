@@ -7,6 +7,7 @@ Configuracoes pessoais de ambiente de desenvolvimento.
 - `ghostty/` — Configuracao do terminal Ghostty
 - `nvim/` — Configuracao do Neovim (lazy.nvim + plugins)
 - `tmux/` — Configuracao do tmux
+- `zsh/` — Configuracao do Zsh (zshrc, zshenv)
 
 ## Instalacao
 
@@ -19,6 +20,11 @@ ln -sf ~/dotenv/nvim ~/.config/nvim
 
 # Tmux
 ln -sf ~/dotenv/tmux/.tmux.conf ~/.tmux.conf
+
+# Zsh
+ln -sf ~/dotenv/zsh/.zshrc ~/.zshrc
+ln -sf ~/dotenv/zsh/.zshenv ~/.zshenv
+cp ~/dotenv/zsh/.zshenv.local.example ~/.zshenv.local  # editar com suas keys
 ```
 
 > O lazy.nvim faz bootstrap automaticamente na primeira execucao do nvim.
