@@ -2,8 +2,12 @@
 
 ## Visao Geral
 
-Setup minimalista e moderno para Neovim 0.11+ usando **lazy.nvim** como gerenciador de plugins.
+Setup minimalista e moderno para Neovim 0.12+ usando **lazy.nvim** como gerenciador de plugins.
 Tema **Catppuccin Mocha** consistente com a configuracao do tmux e Ghostty.
+
+> **Nota:** Neovim 0.12 inclui `vim.pack` (gerenciador de plugins built-in), auto-completion
+> nativo e LSP expandido. Este setup usa lazy.nvim por oferecer lazy-loading, UI, build steps
+> e controle de dependencias que `vim.pack` ainda nao tem. Ambos coexistem sem conflito.
 
 ## Estrutura de Arquivos
 
@@ -137,7 +141,7 @@ Certifique-se de ter instalado:
 
 | Ferramenta | Para que serve | Instalar |
 |-----------|----------------|----------|
-| Neovim >= 0.11 | Editor | `brew install neovim` |
+| Neovim >= 0.12 | Editor | `brew install neovim` |
 | Git >= 2.19 | Plugins e treesitter | `brew install git` |
 | ripgrep | Live grep no Telescope | `brew install ripgrep` |
 | fd | Find files no Telescope | `brew install fd` |
