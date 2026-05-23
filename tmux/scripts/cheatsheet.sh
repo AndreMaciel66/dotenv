@@ -132,7 +132,8 @@ render() {
     # ── GHOSTTY ──────────────────────────────────────────
     printf "\n${LAVENDER}${BOLD}  GHOSTTY${RESET}\n"
     sub "config"
-    printf "  ${DIM}${TEXT}JetBrainsMono NF 14pt · catppuccin-mocha${RESET}\n"
+    printf "  ${DIM}${TEXT}JetBrainsMono NF 14pt · catppuccin-frappe${RESET}\n"
+    printf "  ${DIM}${OVERLAY}(tmux/nvim usam mocha; frappe distingue ctx)${RESET}\n"
     printf "  ${DIM}${TEXT}copy-on-select = clipboard${RESET}\n"
     sub "atalhos"
     row "(arrastar)"    "copia direto"
@@ -141,6 +142,7 @@ render() {
     row "Cmd++ / - / 0" "zoom in / out / reset"
     row "Cmd+K"         "clear scrollback"
     row "Cmd+Click"     "abre link"
+    row "Shift+Enter"   "insere \\n (multi-linha)"
     row "+list-keybinds" "lista TODOS keybinds"
 
     sep
