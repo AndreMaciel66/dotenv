@@ -1,0 +1,13 @@
+# Secrets
+zsh/.zshenv.local
+*.local
+!*.local.example
+
+# Machine-specific
+nvim/lazy-lock.json
+.zsh_history
+.zsh_sessions/
+
+# Backups
+*.bak
+*.backup-*
