@@ -1,0 +1,8 @@
+# ~/.zshenv.local — secrets locais. NÃO COMITAR.
+# Sourced automaticamente por ~/.zshenv.
+#
+# IMPORTANTE: as chaves abaixo apareceram em texto puro no .zshrc antigo
+# e foram expostas durante a configuração. ROTACIONE-AS antes de usar.
+
+export OPENAI_API_KEY=CHANGEME
+export PINECONE_API_KEY=CHANGEME
