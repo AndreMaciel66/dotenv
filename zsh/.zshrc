@@ -74,17 +74,12 @@ zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/compcache"
 bindkey -v
 export KEYTIMEOUT=1  # 10ms — sem latência ao apertar Esc
 
-# Cursor muda de forma entre modos (bar em insert, block em normal)
-_set_cursor() {
-  case $KEYMAP in
-    vicmd)              printf '\e[1 q' ;;  # block
-    main|viins|'')      printf '\e[5 q' ;;  # bar
-  esac
-}
+# Cursor sempre em bloco (preferência pessoal — não gosto da barra fina)
+_set_cursor() { printf '\e[1 q' }
 zle -N zle-keymap-select _set_cursor
 zle -N zle-line-init     _set_cursor
-# Reset pra bar ao executar comando (caso saia em modo normal)
-preexec() { printf '\e[5 q' }
+# Garante bloco também ao executar comando
+preexec() { printf '\e[1 q' }
 
 # History search vim-style em modo normal
 bindkey -M vicmd 'k' up-line-or-history
