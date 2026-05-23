@@ -38,18 +38,19 @@ fi
 
 # Escapar nome do arquivo para prevenir injection
 ESCAPED=$(printf '%q' "$SELECTED")
+EDIT="${EDITOR:-nvim}"
 
 # Abrir arquivo
 case "$SPLIT" in
     horizontal)
-        tmux split-window -t "$CALLER_PANE" -v "vim -- $ESCAPED"
+        tmux split-window -t "$CALLER_PANE" -v "$EDIT -- $ESCAPED"
         ;;
     vertical)
-        tmux split-window -t "$CALLER_PANE" -h "vim -- $ESCAPED"
+        tmux split-window -t "$CALLER_PANE" -h "$EDIT -- $ESCAPED"
         ;;
     scratch)
         tmux new-session -d -s scratch 2>/dev/null || true
-        tmux new-window -t scratch "vim -- $ESCAPED"
+        tmux new-window -t scratch "$EDIT -- $ESCAPED"
         tmux display-popup -E -w 90% -h 90% "tmux attach -t scratch"
         ;;
 esac

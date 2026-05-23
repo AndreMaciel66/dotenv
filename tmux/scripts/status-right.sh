@@ -1,38 +1,68 @@
 #!/bin/bash
+# status-right.sh — gera a parte direita da statusbar do tmux.
+# Espelha o vocabulário visual do prompt do zsh:
+#   path  → mauve     branch → green     dirty (●) → yellow     hora → overlay0
+# Otimizado: 1 chamada `git status` em vez de 4-5 sub-comandos com timeout.
+
 set -euo pipefail
 
 # Cores Catppuccin Mocha
+MAUVE="#cba6f7"
 GREEN="#a6e3a1"
 YELLOW="#f9e2af"
-MAUVE="#cba6f7"
+OVERLAY0="#6c7086"
 SUBTEXT="#a6adc8"
 
-dir="$1"
+dir="${1:-$PWD}"
 
-# Se não conseguir entrar no diretório, mostra só hora
-cd "$dir" 2>/dev/null || { echo "#[fg=$SUBTEXT]%H:%M "; exit 0; }
+# Se o diretório sumiu, mostra só hora.
+cd "$dir" 2>/dev/null || { printf '#[fg=%s] %%H:%%M ' "$OVERLAY0"; exit 0; }
 
-output=""
+out=""
 
-# Python venv (detecta se tem .venv ou venv no diretório)
+# venv ativo (.venv ou venv local)
 if [ -d ".venv" ] || [ -d "venv" ]; then
-    output+="#[fg=$GREEN] venv "
+    out+="#[fg=$GREEN] venv  "
 fi
 
-# Git info (com timeout para não travar a status bar)
-if timeout 2 git rev-parse --is-inside-work-tree &>/dev/null; then
-    branch=$(timeout 2 git branch --show-current 2>/dev/null)
-    [ -z "$branch" ] && branch=$(timeout 2 git rev-parse --short HEAD 2>/dev/null)
+# Git: 1 invocação (`status --porcelain=v2 --branch`), parse local.
+# Timeout global de 2s — em repo muito grande, melhor sumir do que travar.
+if git_out=$(timeout 2 git -c color.ui=false status --porcelain=v2 --branch 2>/dev/null); then
+    branch=""
+    dirty=""
 
-    status=""
-    timeout 2 git diff --quiet 2>/dev/null || status+="*"
-    timeout 2 git diff --cached --quiet 2>/dev/null || status+="+"
-    [ -n "$(timeout 2 git ls-files --others --exclude-standard 2>/dev/null | head -1)" ] && status+="?"
+    while IFS= read -r line; do
+        case "$line" in
+            "# branch.head "*)
+                branch="${line#\# branch.head }"
+                ;;
+            "1 "*|"2 "*|"u "*)
+                dirty="●"
+                ;;
+            "? "*)
+                # untracked — marca dirty também, mesmo símbolo do prompt zsh.
+                dirty="●"
+                ;;
+        esac
+    done <<< "$git_out"
 
-    output+="#[fg=$MAUVE] $branch#[fg=$YELLOW]$status "
+    # Detached HEAD aparece como "(detached)" — troca por sha curto.
+    if [ "$branch" = "(detached)" ]; then
+        branch=$(timeout 1 git rev-parse --short HEAD 2>/dev/null || echo "detached")
+    fi
+
+    if [ -n "$branch" ]; then
+        out+="#[fg=$GREEN] $branch"
+        [ -n "$dirty" ] && out+=" #[fg=$YELLOW]$dirty"
+        out+="  "
+    fi
 fi
 
-# Hora
-output+="#[fg=$SUBTEXT]%H:%M "
+# Diretório atual (basename) em mauve, igual o %~ do prompt zsh.
+# (Hora vem depois, inserida diretamente pelo tmux via format %H:%M no .tmux.conf —
+#  tmux não re-interpreta formats dentro do output de #(...), então tem que ficar fora.)
+base=$(basename "$dir")
+[ "$base" = "$HOME" ] && base="~"
+out+="#[fg=$MAUVE] $base  "
 
-echo "$output"
+printf '%s' "$out"

@@ -19,5 +19,5 @@ else
 fi
 
 if [ -n "$SELECTED" ]; then
-    vim -- "$SELECTED"
+    "${EDITOR:-nvim}" -- "$SELECTED"
 fi
