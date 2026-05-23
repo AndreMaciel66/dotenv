@@ -57,17 +57,28 @@ Dentro do Neo-tree:
 - `H` = toggle arquivos ocultos
 - `?` = ajuda
 
-## Autocompletion (nvim-cmp)
+## Terminal
+
+| Atalho              | Acao                                    |
+|---------------------|-----------------------------------------|
+| `Space /`           | Toggle terminal (esconde/mostra)        |
+| `Space ft`          | Terminal no diretorio atual (pwd)       |
+| `Space fT`          | Terminal no home (~)                    |
+| `Esc Esc`           | Sai do modo terminal                   |
+
+Indicadores na statusline (clicaveis com mouse):
+- Cinza escuro = slot vazio
+- Cinza claro = terminal minimizado
+- Verde = terminal ativo
+
+## Autocompletion (nativo nvim 0.12)
 
 | Atalho              | Acao                                    |
 |---------------------|-----------------------------------------|
 | `Ctrl+n`            | Proximo item                            |
 | `Ctrl+p`            | Item anterior                           |
 | `Ctrl+y`            | Confirmar selecao                       |
-| `Ctrl+Space`        | Abrir menu de completion                |
-| `Ctrl+b / Ctrl+f`   | Scroll na documentacao                  |
-| `Ctrl+l`            | Pular para proximo campo do snippet     |
-| `Ctrl+h`            | Voltar para campo anterior do snippet   |
+| `Ctrl+e`            | Fechar menu                             |
 
 ## Formatacao (Conform)
 
@@ -94,12 +105,11 @@ Os sinais aparecem automaticamente na coluna lateral:
 
 | Comando             | Acao                                    |
 |---------------------|-----------------------------------------|
-| `:Lazy`             | Painel do gerenciador de plugins        |
-| `:Lazy sync`        | Atualizar todos os plugins              |
-| `:Mason`            | Painel do gerenciador de LSP servers    |
+| `:checkhealth vim.pack` | Status dos plugins                 |
 | `:TSInstall <lang>` | Instalar parser treesitter              |
 | `:ConformInfo`      | Ver formatadores configurados           |
 | `:checkhealth`      | Verificar saude do nvim                 |
+| `:lsp`              | Gerenciar LSP servers ativos            |
 
 ## Todo Comments
 
