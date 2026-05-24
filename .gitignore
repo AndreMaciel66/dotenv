@@ -5,6 +5,7 @@ zsh/.zshenv.local
 
 # Machine-specific
 nvim/lazy-lock.json
+nvim/nvim-pack-lock.json
 .zsh_history
 .zsh_sessions/
 
